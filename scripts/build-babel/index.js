@@ -18,18 +18,17 @@ glob(`${SRC}/**/*.js`)
       const gccCompiled = compile({
         jsCode: [
           {
-            src: babelTransformed
-          }
+            src: babelTransformed,
+          },
         ],
         compilationLevel: 'SIMPLE',
         languageIn: 'ECMASCRIPT5_STRICT',
         languageOut: 'ECMASCRIPT5_STRICT',
         env: 'CUSTOM',
         warningLevel: 'QUIET',
-        applyInputSourceMaps: false
+        applyInputSourceMaps: false,
       }).compiledCode;
-      fs.writeFileSync(oFile, babelTransformed);
-      // fs.writeFileSync(oFile, gccCompiled);
+      fs.writeFileSync(oFile, gccCompiled);
       log.info('Babel', `${iFile} => ${oFile}`);
     });
   })

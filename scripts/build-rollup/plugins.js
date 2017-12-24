@@ -12,13 +12,13 @@ module.exports = [
         {
           modules: false,
           targets: {
-            browsers: ['last 2 versions', 'safari >= 7']
-          }
-        }
+            browsers: ['last 2 versions', 'safari >= 7'],
+          },
+        },
       ],
-      ['flow']
+      ['flow'],
     ],
-    plugins: []
+    plugins: [],
   }),
   commonjs(),
   closure({
@@ -26,7 +26,7 @@ module.exports = [
     languageIn: 'ECMASCRIPT5_STRICT',
     languageOut: 'ECMASCRIPT5_STRICT',
     env: 'CUSTOM',
-    warningLevel: 'QUIET',
-    applyInputSourceMaps: false
-  })
+    applyInputSourceMaps: false,
+    processCommonJsModules: false,
+  }),
 ];

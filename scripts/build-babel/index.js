@@ -2,6 +2,7 @@ const babel = require('babel-core');
 const fs = require('fs');
 const { execSync } = require('child_process');
 const path = require('path');
+const compile = require('google-closure-compiler-js').compile;
 const { log, glob } = require('../utils');
 
 const LIB = 'lib';
@@ -13,7 +14,22 @@ glob(`${SRC}/**/*.js`)
       const oFile = iFile.replace(SRC, LIB);
       // create path if it doesn't exist
       execSync(`mkdir -p ${path.dirname(oFile)}`);
-      fs.writeFileSync(oFile, babel.transformFileSync(iFile).code);
+      const babelTransformed = babel.transformFileSync(iFile).code;
+      const gccCompiled = compile({
+        jsCode: [
+          {
+            src: babelTransformed
+          }
+        ],
+        compilationLevel: 'SIMPLE',
+        languageIn: 'ECMASCRIPT5_STRICT',
+        languageOut: 'ECMASCRIPT5_STRICT',
+        env: 'CUSTOM',
+        warningLevel: 'QUIET',
+        applyInputSourceMaps: false
+      }).compiledCode;
+      fs.writeFileSync(oFile, babelTransformed);
+      // fs.writeFileSync(oFile, gccCompiled);
       log.info('Babel', `${iFile} => ${oFile}`);
     });
   })

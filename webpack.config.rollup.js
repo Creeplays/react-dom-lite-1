@@ -1,3 +1,4 @@
+const CompressionPlugin = require('compression-webpack-plugin');
 const { rules, plugins } = require('webpack-atoms');
 
 module.exports = {
@@ -19,6 +20,7 @@ module.exports = {
     plugins.html({
       template: `${__dirname}/examples/index.html`
     }),
-    plugins.extractText()
+    plugins.extractText(),
+    new CompressionPlugin()
   ]
 };
